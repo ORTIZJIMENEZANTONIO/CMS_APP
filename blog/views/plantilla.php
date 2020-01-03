@@ -1,12 +1,19 @@
+<?php 
+require_once 'controllers/blog_controller.php';
+$blog = blog_controller::mostrar_blog_ctr();
+
+echo '<pre>'; print_r($blog); echo '</pre>';
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="author" content="José Antonio Ortiz Jiménez">
-	<meta name="keywords" content="cms con php, prueba de php">
+	<meta name="title" content="Antonio project">
 	<meta name="description" content="Es un blog que se hizo a raíz de un ttutorial de php">
+	<meta name="keywords" content="cms con php, prueba de php">
+	<meta name="author" content="José Antonio Ortiz Jiménez">
 	<title>Antonio Blog</title>
 	<link rel="icon" href="views/img/icono.jpg">
 

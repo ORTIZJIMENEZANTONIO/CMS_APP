@@ -44,12 +44,6 @@
 						</a>
 					</li>
 
-					<li>
-						<a href="#" target="_blank">
-							<i class="fab fa-snapchat-ghost lead rounded-circle text-white mr-1"></i>
-						</a>
-					</li>
-
 				</ul>
 
 			</div>
