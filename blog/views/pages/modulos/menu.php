@@ -7,48 +7,12 @@ MENU
 	<a href="#" class="btnClose">X</a>
 
 	<ul class="nav flex-column text-center">
+		<?php foreach ($menu as $key => $value): ?>
+			<li class="nav-item">
+				<a class="nav-link text-white" href="<?php echo $value['ruta']; ?>"><?php echo $value['titulo']; ?></a>
 
-		<li class="nav-item">
-
-			<a class="nav-link text-white" href="categorias.html">Mi viaje por Suramérica</a>
-
-		</li>
-
-		<li class="nav-item">
-
-			<a class="nav-link text-white" href="categorias.html">Mi viaje por Centroamérica</a>
-
-		</li>
-
-		<li class="nav-item">
-
-			<a class="nav-link text-white" href="categorias.html">Mi viaje por Norteamérica</a>
-
-		</li>
-
-		<li class="nav-item">
-
-			<a class="nav-link text-white" href="categorias.html">Mi viaje por Europa</a>
-
-		</li>
-
-		<li class="nav-item">
-
-			<a class="nav-link text-white" href="categorias.html">Mi viaje por Asia</a>
-
-		</li>
-
-		<li class="nav-item">
-
-			<a class="nav-link text-white" href="categorias.html">Mi viaje por Africa</a>
-
-		</li>
-
-		<li class="nav-item">
-
-			<a class="nav-link text-white" href="categorias.html">Mi viaje por Oceanía</a>
-
-		</li>
+			</li>
+		<?php endforeach ?>
 
 	</ul>
 

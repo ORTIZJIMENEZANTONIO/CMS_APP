@@ -93,15 +93,23 @@ $(".grid figure, .gridFooter figure").click(function(){
 /*=============================================
 PAGINACIÓN
 =============================================*/
-
+var paginas_totales = Number($(".pagination").attr('total_paginas'));
+var pagina_actual = Number($(".pagination").attr('pagina_actual'));
+//console.log(paginas_totales);
 $(".pagination").twbsPagination({
-	totalPages: 10,
+	totalPages: paginas_totales,
+	startPage: pagina_actual,
 	visiblePages: 4,
 	first: "Primero",
 	last: "Último",
 	prev: '<i class="fas fa-angle-left"></i>',
 	next: '<i class="fas fa-angle-right"></i>'
 
+}).on("page", function(evt, page){
+	//console.log("page",page);
+	//alert(window.location);
+	//here="window.location"; 
+	window.location = global_apiserver + page;
 });
 
 

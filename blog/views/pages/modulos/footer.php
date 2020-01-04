@@ -19,18 +19,18 @@ FOOTER
 						<div class="d-flex">
 
 							<div class="d-flex flex-column columna1">
-							
-								<figure class="p-2 m-0 photo1" vinculo="categorias.html">
-									
-									<p class="text-uppercase p-1 p-md-2 p-xl-1 small">Suramérica</p>
+								<figure class="p-2 m-0 photo1" vinculo="<?php echo $menu[0]['ruta']; ?>" style="background-image: url(<?php echo $menu[0]['img']; ?>);">
+
+									<p class="text-uppercase p-1 p-md-2 p-xl-1"><?php echo $menu[0]['titulo']; ?></p>
 
 								</figure>
 
-								<figure class="p-2 m-0 photo2" vinculo="categorias.html">
-									
-									<p class="text-uppercase p-1 p-md-2 p-xl-1 small">Africa</p>
+	
+								<figure class="p-2 m-0 photo2" vinculo="<?php echo $menu[1]['ruta']; ?>" style="background-image: url(<?php echo $menu[1]['img']; ?>);">
 
-								</figure>								
+									<p class="text-uppercase p-1 p-md-2 p-xl-1 small"><?php echo $menu[1]['titulo']; ?></p>
+
+								</figure>							
 
 							</div>
 
@@ -38,24 +38,24 @@ FOOTER
 
 								<div class="d-block d-md-flex">
 
-									<figure class="p-2 m-0 flex-fill photo3" vinculo="categorias.html">
+									<figure class="p-2 m-0 flex-fill photo3" vinculo="<?php echo $menu[3]['ruta']; ?>" style="background-image: url(<?php echo $menu[3]['img']; ?>);">
 
-										<p class="text-uppercase p-1 p-md-2 p-xl-1 small">Centromérica</p>
-										
+										<p class="text-uppercase p-1 p-md-2 p-xl-1 small"><?php echo $menu[3]['titulo']; ?></p>
+
 									</figure>
+				
+									<figure class="p-2 m-0 flex-fill photo4" vinculo="<?php echo $menu[4]['ruta']; ?>" style="background-image: url(<?php echo $menu[4]['img']; ?>);">
 
-									<figure class="p-2 m-0 flex-fill photo4" vinculo="categorias.html">
-										
-										<p class="text-uppercase p-1 p-md-2 p-xl-1 small">Europa</p>
+										<p class="text-uppercase p-1 p-md-2 p-xl-1 small"><?php echo $menu[4]['titulo']; ?></p>
 
 									</figure>
 
 								</div>
+								
+								<figure class="p-2 m-0 photo5" vinculo="<?php echo $menu[5]['ruta']; ?>" style="background-image: url(<?php echo $menu[5]['img']; ?>);">
 
-								<figure class="p-2 m-0 photo5" vinculo="categorias.html">
+									<p class="text-uppercase p-1 p-md-2 p-xl-1 small"><?php echo $menu[5]['titulo']; ?></p>
 
-									<p class="text-uppercase p-1 p-md-2 p-xl-1 small">Norteamérica</p>
-									
 								</figure>
 
 							</div>

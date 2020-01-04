@@ -1,22 +1,66 @@
 <?php 
 require_once 'controllers/blog_controller.php';
 $blog = blog_controller::mostrar_blog_ctr();
+$menu = blog_controller::mostrar_categorias_ctr();
+$total_articulos = blog_controller::count_total_ctr();
+$paginas_totales = ceil($total_articulos['total']/5);
+if (!isset($_GET['pg'])) {
+	$pagina_actual = 1;
+	$articulos = blog_controller::mostrar_articulos_ctr(1, null, null);
+}else {
+	if (is_numeric($_GET['pg'])) {
+		$pagina_actual = $_GET['pg'];
+		$articulos = blog_controller::mostrar_articulos_ctr($_GET['pg'], null, null);
+	}else{
+		$pagina_actual = 1;
+	}
+}
 
-echo '<pre>'; print_r($blog); echo '</pre>';
+//echo '<pre class="bg-light">'; print_r($paginas_totales); echo '</pre>';
  ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="title" content="Antonio project">
-	<meta name="description" content="Es un blog que se hizo a raíz de un ttutorial de php">
-	<meta name="keywords" content="cms con php, prueba de php">
+	<!-- meta datos dinámicos -->
+	<?php if (!isset($_GET['pg'])): ?>
+		<meta name="title" content="<?php echo $blog['titulo']; ?>">
+		<meta name="description" content="<?php echo $blog['descripcion']; ?>">
+		<?php $key_words=""; $kw = json_decode($blog['palabras_clave'],true); ?>
+		<?php foreach ($kw as $key => $value): $key_words.=$value.", ";?>
+		<?php endforeach ?>
+		<meta name="keywords" content="<?php echo substr($key_words,0,-2);?>">
+	<?php else: $rut = ""?>
+		<?php foreach ($menu as $key => $value): ?>
+			<?php if ($_GET['pg'] == $value['ruta']): ?>
+				<?php $rut = "categorias"; 
+					$key_w = $value['palabras_clave']; 
+					$title = $value['titulo'];
+					$description = $value['description'];
+				?>
+			<?php endif ?>
+		<?php endforeach ?>
+		<?php if ($rut == "categorias"): ?>
+				<meta name="title" content="<?php echo $blog['titulo']." ".$title; ?>">
+				<meta name="description" content="<?php echo $description; ?>">
+				<title><?php echo $blog['titulo']." | ".$title; ?></title>
+				<?php $kwords=""; $kw = json_decode($key_w,true); ?>
+				<?php foreach ($kw as $key => $val): $kwords.=$val.", ";?>
+				<?php endforeach ?>
+				<meta name="keywords" content="<?php echo substr($kwords,0,-2);?>">
+		<?php else: ?>
+					<meta name="title" content="<?php echo $blog['titulo']; ?>">
+					<meta name="description" content="<?php echo $blog['descripcion']; ?>">
+					<?php $key_words=""; $kw = json_decode($blog['palabras_clave'],true); ?>
+					<?php foreach ($kw as $key => $value): $key_words.=$value.", ";?>
+					<?php endforeach ?>
+					<meta name="keywords" content="<?php echo substr($key_words,0,-2);?>">
+		<?php endif ?>
+	<?php endif ?>
+	<!-- fin de metadatos dinámicos -->
 	<meta name="author" content="José Antonio Ortiz Jiménez">
-	<title>Antonio Blog</title>
-	<link rel="icon" href="views/img/icono.jpg">
-
+	<link rel="icon" href="<?php echo $blog['icono']; ?>">
 
 	<!--=====================================
 	PLUGINS DE CSS
@@ -69,20 +113,36 @@ echo '<pre>'; print_r($blog); echo '</pre>';
 		include 'pages/modulos/redes-sociales-movil.php';
 		include 'pages/modulos/buscador-movil.php';
 		include 'pages/modulos/menu.php';
+		include 'common/apiserver.php';
 
 		/*================================================
 		=            navegación entre páginas            =
 		================================================*/
-		
-		include 'pages/inicio.php';
-		
+		if(!isset($_GET['pg'])){
+			include_once 'pages/inicio.php';
+		}else{
+			$rutas = explode(",", $_GET['pg']);
+			echo '<pre class="bg-light">'; print_r($rutas); echo '</pre>';
+			$inc = "";
+			foreach ($menu as $key => $value) {
+				if ($_GET['pg'] == $value['ruta']){
+					$inc = "categorias";
+				}	
+			}
+			if ($inc == "categorias") {
+					include_once 'pages/categorias.php';
+				}else if (is_numeric($_GET['pg']) and $_GET['pg']<=$paginas_totales) {
+					include_once 'pages/inicio.php';
+				}else {
+					include_once 'pages/404.php';
+				}
+		}
 		/*=====  End of navegación entre páginas  ======*/
 		
-		
-
-
 		include 'pages/modulos/footer.php';
 	?>
+
+	<script src="common/apiserver.js"></script>
 	<script src="views/js/script.js"></script>
 </body>
 </html>

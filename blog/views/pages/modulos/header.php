@@ -7,7 +7,7 @@
 			<!-- LOGO -->
 			<div class="col-10 col-sm-11 col-md-8 pt-1 pt-lg-3 p-xl-0">
 				
-				<a href="index.html">
+				<a href="./">
 					
 					<img src="views/img/logotipo-negativo.png" alt="Logo de Juanito Travel" class="img-fluid logotipo">
 
@@ -19,31 +19,17 @@
 			<div class="d-none d-md-block col-md-2 redes">
 				
 				<ul class="d-flex justify-content-end pt-3 mt-1">
+					<?php 
+						$redes = json_decode($blog['redes_sociales'],true);
+					 ?>
 					
-					<li>
-						<a href="https://www.facebook.com" target="_blank">
-							<i class="fab fa-facebook-f lead rounded-circle text-white mr-1"></i>
-						</a>
-					</li>
-
-					<li>
-						<a href="#" target="_blank">
-							<i class="fab fa-instagram lead rounded-circle text-white mr-1"></i>
-						</a>
-					</li>
-
-					<li>
-						<a href="#" target="_blank">
-							<i class="fab fa-twitter lead rounded-circle text-white mr-1"></i>
-						</a>
-					</li>
-
-					<li>
-						<a href="#" target="_blank">
-							<i class="fab fa-youtube lead rounded-circle text-white mr-1"></i>
-						</a>
-					</li>
-
+					<?php foreach ($redes as $key => $value): ?>
+						<li>
+							<a href="<?php echo $value['url'];?>" target="_blank">
+								<i class="<?php echo $value['icono'];?> lead rounded-circle text-white mr-1"></i>
+							</a>
+						</li>
+					<?php endforeach ?>
 				</ul>
 
 			</div>

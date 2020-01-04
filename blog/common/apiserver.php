@@ -1,0 +1,1 @@
+<?php $global_apiserver = "http://localhost/CMS/CMS_APP/blog/"; ?>
