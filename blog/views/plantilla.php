@@ -2,7 +2,7 @@
 require_once 'controllers/blog_controller.php';
 $blog = blog_controller::mostrar_blog_ctr();
 $menu = blog_controller::mostrar_categorias_ctr();
-$total_articulos = blog_controller::count_total_ctr();
+$total_articulos = blog_controller::count_total_ctr(null, null);
 $paginas_totales = ceil($total_articulos['total']/5);
 if (!isset($_GET['pg'])) {
 	$pagina_actual = 1;
@@ -122,7 +122,10 @@ if (!isset($_GET['pg'])) {
 			include_once 'pages/inicio.php';
 		}else{
 			$rutas = explode(",", $_GET['pg']);
-			echo '<pre class="bg-light">'; print_r($rutas); echo '</pre>';
+			if(count($rutas)>1 && is_numeric($rutas[1])){
+				
+			}
+
 			$inc = "";
 			foreach ($menu as $key => $value) {
 				if ($_GET['pg'] == $value['ruta']){

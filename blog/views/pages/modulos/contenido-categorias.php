@@ -2,6 +2,10 @@
 
 if (isset($_GET['pg'])) {
 	$articulos = blog_controller::mostrar_articulos_ctr(1, "ruta", $_GET['pg']);
+	$total_articulos_cat = blog_controller::count_total_ctr("ruta", $_GET['pg']);
+	$paginas_totales = ceil($total_articulos_cat/5);
+	$etiquetas = blog_controller::mostrar_etiquetas_ctr(2, $_GET['pg']);
+	$etiquetas = json_decode($etiquetas['palabras_clave'], true);
 }
 
  ?>
@@ -81,28 +85,9 @@ if (isset($_GET['pg'])) {
 
 					<h4>Etiquetas</h4>
 
-
-						<a href="#suramerica" class="btn btn-secondary btn-sm m-1">suramerica</a> 				
-					
-						<a href="#colombia" class="btn btn-secondary btn-sm m-1">colombia</a> 					
-					
-						<a href="#peru" class="btn btn-secondary btn-sm m-1">peru</a> 					
-					
-						<a href="#argentina" class="btn btn-secondary btn-sm m-1">argentina</a> 					
-					
-						<a href="#chile" class="btn btn-secondary btn-sm m-1">chile</a> 					
-					
-						<a href="#brasil" class="btn btn-secondary btn-sm m-1">brasil</a> 					
-					
-						<a href="#ecuador" class="btn btn-secondary btn-sm m-1">ecuador</a> 						
-					
-						<a href="#venezuela" class="btn btn-secondary btn-sm m-1">venezuela</a> 
-											
-						<a href="#paraguay" class="btn btn-secondary btn-sm m-1">paraguay</a> 						
-					
-						<a href="#uruguay" class="btn btn-secondary btn-sm m-1">uruguay</a> 						
-					
-						<a href="#bolivia" class="btn btn-secondary btn-sm m-1">bolivia</a> 					
+						<?php foreach ($etiquetas as $key => $value): ?>
+							<a href="#suramerica" class="btn btn-secondary btn-sm m-1"><?php echo $value; ?></a> 
+						<?php endforeach ?>				
 										
 				</div>	
 
