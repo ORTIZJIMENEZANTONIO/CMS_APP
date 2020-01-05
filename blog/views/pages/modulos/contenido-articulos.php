@@ -316,7 +316,7 @@ CONTENIDO ARTÍCULO
 				<div class="my-4">
 					
 					<h4>Artículos Recientes</h4>
-
+					<!--
 					<div class="d-flex my-3">
 						
 						<div class="w-100 w-xl-50 pr-3 pt-2">
@@ -340,54 +340,33 @@ CONTENIDO ARTÍCULO
 						</div>
 
 					</div>
+				-->
 
-					<div class="d-flex my-3">
-						
-						<div class="w-100 w-xl-50 pr-3 pt-2">
+					<?php foreach ($articulos_destacados as $key => $value): ?>
+						<div class="d-flex my-3">
 							
-							<a href="articulos.html">
+							<div class="w-100 w-xl-50 pr-3 pt-2">
+								
+								<a href="<?php echo $value['ruta']; ?>">
 
-								<img src="views/img/articulo06.png" alt="Lorem ipsum dolor sit amet" class="img-fluid">
+									<img src="<?php echo $value['portada']; ?>" alt="<?php echo $value['titulo']; ?>" class="img-fluid">
 
-							</a>
+								</a>
 
-						</div>
+							</div>
 
-						<div>
+							<div>
 
-							<a href="articulos.html" class="text-secondary">
+								<a href="<?php echo $value['ruta']; ?>" class="text-secondary">
 
-								<p class="small">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+									<p class="small"><?php echo $value['description']; ?></p>
 
-							</a>
+								</a>
 
-						</div>
-
-					</div>
-
-					<div class="d-flex my-3">
-						
-						<div class="w-100 w-xl-50 pr-3 pt-2">
-							
-							<a href="articulos.html">
-
-								<img src="views/img/articulo07.png" alt="Lorem ipsum dolor sit amet" class="img-fluid">
-
-							</a>
+							</div>
 
 						</div>
-
-						<div>
-
-							<a href="articulos.html" class="text-secondary">
-
-								<p class="small">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-
-							</a>
-
-						</div>
-
-					</div>
+					<?php endforeach ?>
 
 
 				</div>

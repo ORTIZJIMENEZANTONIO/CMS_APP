@@ -62,6 +62,12 @@ class blog_controller{
 		//echo '<pre>'; print_r($response['total']); echo '</pre>';
 		return $response;
 	}
+
+
+	static public function mostrar_articulos_destacados_ctr(){
+		$response = blog_model:: mostrar_articulos_destacados_mdl();
+		return $response;
+	}
 	
 }
 

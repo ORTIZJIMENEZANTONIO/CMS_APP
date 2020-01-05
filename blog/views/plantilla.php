@@ -1,5 +1,6 @@
 <?php 
 require_once 'controllers/blog_controller.php';
+
 $blog = blog_controller::mostrar_blog_ctr();
 $menu = blog_controller::mostrar_categorias_ctr();
 $total_articulos = blog_controller::count_total_ctr(null, null);
@@ -15,8 +16,9 @@ if (!isset($_GET['pg'])) {
 		$pagina_actual = 1;
 	}
 }
+$articulos_destacados = blog_controller::mostrar_articulos_destacados_ctr();
 
-//echo '<pre class="bg-light">'; print_r($paginas_totales); echo '</pre>';
+//echo '<pre class="bg-light">'; print_r($articulos_destacados); echo '</pre>';
  ?>
 <!DOCTYPE html>
 <html lang="en">

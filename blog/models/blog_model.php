@@ -78,6 +78,16 @@ class blog_model{
 		$stmt = null;
 	}
 
+
+	static public function mostrar_articulos_destacados_mdl(){
+		$query = "SELECT id, titulo, ruta, portada, description FROM `tbl_articulos` Order by visitas desc limit 0,3";
+		$stmt = conection::conect()->prepare($query);
+		$stmt -> execute();
+		return $stmt->fetchAll();
+		$stmt -> close();
+		$stmt = null;
+	}
+
 }
 
  ?>
