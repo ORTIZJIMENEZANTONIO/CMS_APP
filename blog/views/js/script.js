@@ -107,9 +107,33 @@ $(".pagination").twbsPagination({
 
 }).on("page", function(evt, page){
 	//console.log("page",page);
-	//alert(window.location);
-	//here="window.location"; 
-	window.location = global_apiserver + page;
+	here = window.location;
+	here = here.toString();
+	here = here.split('/blog/');
+	if(here[1] == "" ){
+		window.location = global_apiserver + page;
+	}else{
+		here[1] = here[1].toString();
+		here 	= here[1].split(',');
+		//alert(typeof(here[0]) + ":" + here[0] + " y " + typeof(here[1]) + ":" + here[1]);
+		if (here[1] != "" && here[0] != "") {
+			//alert("un if"+ typeof(here[0]) + ":" + here[0] + " y " + typeof(here[1]) + ":" + here[1]);
+			if (parseInt(here[0])) {
+				window.location = global_apiserver + page;
+			}else{
+				window.location = global_apiserver + here[0] + "," + page;
+			}	
+		}else if (here[1] == "" && here[0] != ""){
+			alert("segundo if");
+			window.location = global_apiserver + here[0] + "," + page;
+		}else{
+			alert("tercer if");
+			window.location = global_apiserver + page;
+		}
+	}
+	
+
+	
 });
 
 

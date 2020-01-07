@@ -5,20 +5,29 @@ $blog = blog_controller::mostrar_blog_ctr();
 $menu = blog_controller::mostrar_categorias_ctr();
 $total_articulos = blog_controller::count_total_ctr(null, null);
 $paginas_totales = ceil($total_articulos['total']/5);
+$articulos_destacados = blog_controller::mostrar_articulos_destacados_ctr();
+$pagina_actual = 1;
 if (!isset($_GET['pg'])) {
 	$pagina_actual = 1;
 	$articulos = blog_controller::mostrar_articulos_ctr(1, null, null);
 }else {
-	if (is_numeric($_GET['pg'])) {
+	$rutas = explode(",", $_GET['pg']);
+
+	if(count($rutas)>1 && is_numeric($rutas[1])){
+		$pagina_actual = $rutas[1];
+		//echo '<pre class="bg-light">'; print_r($rutas); echo '</pre>';
+	}else if (count($rutas)>1 && !is_numeric($rutas[1])) {
+
+	}else if(count($rutas)==1 && is_numeric($rutas[0])){
 		$pagina_actual = $_GET['pg'];
 		$articulos = blog_controller::mostrar_articulos_ctr($_GET['pg'], null, null);
+	}else if (count($rutas)==1 && !is_numeric($rutas[0])) {
+	
 	}else{
-		$pagina_actual = 1;
+		include_once 'pages/404.php';
 	}
 }
-$articulos_destacados = blog_controller::mostrar_articulos_destacados_ctr();
-
-//echo '<pre class="bg-light">'; print_r($articulos_destacados); echo '</pre>';
+//echo '<pre class="bg-light">'; print_r($rutas); echo '</pre>';
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -123,25 +132,46 @@ $articulos_destacados = blog_controller::mostrar_articulos_destacados_ctr();
 		if(!isset($_GET['pg'])){
 			include_once 'pages/inicio.php';
 		}else{
-			$rutas = explode(",", $_GET['pg']);
 			if(count($rutas)>1 && is_numeric($rutas[1])){
-				
-			}
+				$inc = "";
+				foreach ($menu as $key => $value) {
+					if ($rutas[0] == $value['ruta']){
+						$inc = "categorias";
+					}	
+				}
 
-			$inc = "";
-			foreach ($menu as $key => $value) {
-				if ($_GET['pg'] == $value['ruta']){
-					$inc = "categorias";
-				}	
-			}
-			if ($inc == "categorias") {
+				if ($inc == "categorias") {
 					include_once 'pages/categorias.php';
-				}else if (is_numeric($_GET['pg']) and $_GET['pg']<=$paginas_totales) {
+				}else {
+					include_once 'pages/404.php';
+				}
+			}else if (count($rutas)>1 && !is_numeric($rutas[1])) {
+				
+			}else if(count($rutas)==1 && is_numeric($rutas[0])){
+				if ($rutas[0]<=$paginas_totales) {
 					include_once 'pages/inicio.php';
 				}else {
 					include_once 'pages/404.php';
 				}
+			}else if (count($rutas)==1 && !is_numeric($rutas[0])) {
+				$inc = "";
+				foreach ($menu as $key => $value) {
+					if ($rutas[0] == $value['ruta']){
+						$inc = "categorias";
+					}	
+				}
+
+				if ($inc == "categorias") {
+					include_once 'pages/categorias.php';
+				}else {
+					include_once 'pages/404.php';
+				}
+				/* aquí deberia revisar si no quieres visualizr un articulo */
+			}else{
+				include_once 'pages/404.php';
+			}
 		}
+
 		/*=====  End of navegación entre páginas  ======*/
 		
 		include 'pages/modulos/footer.php';

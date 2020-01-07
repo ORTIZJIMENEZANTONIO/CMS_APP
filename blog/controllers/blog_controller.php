@@ -37,10 +37,8 @@ class blog_controller{
 			$response = count( blog_model::mostrar_articulos_mdl($table1, $table2, null, null, $item, $valor));
 			//echo '<pre class="bg-light">'; var_dump($response); echo '</pre>';
 			return $response;
-		}
-		
+		}	
 	}
-
 
 	static public function mostrar_etiquetas_ctr($t, $item){
 		switch ($t) {
@@ -63,10 +61,13 @@ class blog_controller{
 		return $response;
 	}
 
-
 	static public function mostrar_articulos_destacados_ctr(){
 		$response = blog_model:: mostrar_articulos_destacados_mdl();
 		return $response;
+	}
+
+	static public function mostrar_articulo_ctr(){
+		
 	}
 	
 }

@@ -1,14 +1,26 @@
 <?php 
-
-if (isset($_GET['pg'])) {
-	$articulos = blog_controller::mostrar_articulos_ctr(1, "ruta", $_GET['pg']);
-	$total_articulos_cat = blog_controller::count_total_ctr("ruta", $_GET['pg']);
+	$cat = $rutas[0];
+	$total_articulos_cat = blog_controller::count_total_ctr("ruta", $rutas[0]);
 	$paginas_totales = ceil($total_articulos_cat/5);
-	$etiquetas = blog_controller::mostrar_etiquetas_ctr(2, $_GET['pg']);
+	$etiquetas = blog_controller::mostrar_etiquetas_ctr(2, $rutas[0]);
 	$etiquetas = json_decode($etiquetas['palabras_clave'], true);
+if (count($rutas)==1) {
+	$articulos = blog_controller::mostrar_articulos_ctr(1, "ruta", $rutas[0]);
+
+}else if (count($rutas)>1 && is_numeric($rutas[1])) {
+	if ($rutas[1]<=$total_articulos_cat) {
+		$articulos = blog_controller::mostrar_articulos_ctr($rutas[1], "ruta", $rutas[0]);
+	
+	}else{
+		$articulos = NULL;
+		//echo "<div><p class='display-1'>No hay más artículos<p></div>";
+	}
+	
+
+}else if (count($rutas)>1 && !is_numeric($rutas[1])) {
 }
 
- ?>
+?>
 <div class="container-fluid bg-white contenidoInicio py-2 py-md-4">
 	
 	<div class="container">
@@ -19,7 +31,7 @@ if (isset($_GET['pg'])) {
 
 			<li class="breadcrumb-item inicio"><a href="index.html">Inicio</a></li>
 
-			<li class="breadcrumb-item active">Mi viaje por Suramérica</li>
+			<li class="breadcrumb-item active">Mi viaje por <?php echo $cat; ?>
 
 		</ul>
 		
@@ -29,6 +41,7 @@ if (isset($_GET['pg'])) {
 
 			<div class="col-12 col-md-8 col-lg-9 p-0 pr-lg-5">
 				<!-- ARTÍCULOS -->
+				<?php if (isset($articulos)) { ?>
 				<?php foreach ($articulos as $key => $value): ?>
 					<div class="row">
 
@@ -57,8 +70,11 @@ if (isset($_GET['pg'])) {
 
 					<hr class="mb-4 mb-lg-5" style="border: 1px solid #79FF39">
 				<?php endforeach ?>
-
-
+				<?php } else{ ?>
+				<div>
+					<p class='display-1'>No hay más artículos<p>
+				</div>
+				<?php } ?>
 				<!-- PUBLICIDAD -->
 
 				<div class="d-block d-lg-none">
@@ -66,6 +82,8 @@ if (isset($_GET['pg'])) {
 					<img src="views/img/ad02.jpg" class="img-fluid" width="100%">
 
 				</div>
+				
+				<!-- Paginación -->
 
 				<div class="container d-none d-md-block">
 					
@@ -99,9 +117,9 @@ if (isset($_GET['pg'])) {
 
 					<?php foreach ($articulos_destacados as $key => $value): ?>
 						<div class="d-flex my-3">
-							
+
 							<div class="w-100 w-xl-50 pr-3 pt-2">
-								
+
 								<a href="<?php echo $value['ruta']; ?>">
 
 									<img src="<?php echo $value['portada']; ?>" alt="<?php echo $value['titulo']; ?>" class="img-fluid">
