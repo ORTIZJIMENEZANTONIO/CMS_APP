@@ -1,0 +1,18 @@
+{
+  "name": "shape-share",
+  "version": "1.0.0",
+  "main": [
+    "build/shape.share.js",
+    "build/shape.share.min.js"
+  ],
+  "ignore": [
+    ".codekit-cache",
+    ".git",
+    ".DS_Store",
+    "demo",
+    "README.md"
+  ],
+  "dependencies": {
+    "jquery": ">=1.10.2"
+  }
+}

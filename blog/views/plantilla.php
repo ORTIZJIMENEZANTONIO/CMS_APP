@@ -209,7 +209,9 @@ if (!isset($_GET['pg'])) {
 	?>
 
 	<script src="common/apiserver.js"></script>
+	<?php if (isset($articulo)): ?>
+		<script src="views/js/plugins/shape.share.js"></script>
+	<?php endif ?>
 	<script src="views/js/script.js"></script>
-	<script src="shape.share.js"></script>
 </body>
 </html>

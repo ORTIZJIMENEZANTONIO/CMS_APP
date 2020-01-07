@@ -169,14 +169,6 @@ $(".deslizadorArticulos").jdSlider({
 })
 
 $('.social-share').shapeShare({
-	twitter: {
-    account:'jqueryscript'
-  },
-  // bitly.com API here
-  shortenUrl: {
-    enable:true,
-    apiKey:'R_cb9b7614dbd84e4b8aee2a4f25a2fda9',
-    login:'o_65q884feb1'
-  }
+	
 
 });
