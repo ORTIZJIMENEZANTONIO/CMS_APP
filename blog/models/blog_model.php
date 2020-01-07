@@ -88,6 +88,20 @@ class blog_model{
 		$stmt = null;
 	}
 
+
+	static public function mostrar_articulo_mdl($table, $item, $valor){
+		$query = "SELECT ta.titulo, ta.portada, ta.contenido, ta.description, ta.palabras_clave , DATE_FORMAT(ta.fecha, '%d/%m/%Y') as fecha, tc.titulo as categoria, tc.ruta as ruta_categoria  FROM $table ta, tbl_categorias tc WHERE ta.id_categoria = tc.id AND ta.$item = :$item  ";
+		//echo($query);
+		$stmt  = conection::conect()->prepare($query); 
+		$stmt  -> bindParam(":".$item , $valor, PDO::PARAM_STR);
+		$stmt  -> execute(); 
+		return $stmt->fetch();
+		$stmt -> close();
+		$stmt = NULL;
+	
+	}
+
+	
 }
 
  ?>

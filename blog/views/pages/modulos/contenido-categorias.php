@@ -29,9 +29,9 @@ if (count($rutas)==1) {
 
 		<ul class="breadcrumb bg-white p-0 mb-2 mb-md-4">
 
-			<li class="breadcrumb-item inicio"><a href="index.html">Inicio</a></li>
+			<li class="breadcrumb-item inicio"><a href="<?php echo $global_apiserver; ?>">Inicio</a></li>
 
-			<li class="breadcrumb-item active">Mi viaje por <?php echo $cat; ?>
+			<li class="breadcrumb-item active"><?php echo $cat; ?>
 
 		</ul>
 		
@@ -49,7 +49,7 @@ if (count($rutas)==1) {
 
 							<a href="<?php echo $value['ruta']; ?>"><h5 class="d-block d-lg-none py-3"><?php echo $value['titulo']; ?></h5></a>
 
-							<a href="articulos.html"><img src="<?php echo $value['portada']; ?>" alt="<?php echo $value['titulo']; ?>" class="img-fluid" width="100%"></a>
+							<a href="<?php echo $value['ruta']; ?>"><img src="<?php echo $value['portada']; ?>" alt="<?php echo $value['titulo']; ?>" class="img-fluid" width="100%"></a>
 
 						</div>
 

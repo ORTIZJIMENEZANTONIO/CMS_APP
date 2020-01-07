@@ -66,8 +66,10 @@ class blog_controller{
 		return $response;
 	}
 
-	static public function mostrar_articulo_ctr(){
-		
+	static public function mostrar_articulo_ctr($item, $valor){
+		$table = "tbl_articulos";
+		$response = blog_model::mostrar_articulo_mdl($table, $item, $valor);
+		return $response;
 	}
 	
 }

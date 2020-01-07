@@ -1,14 +1,16 @@
 <!--=====================================
 CONTENIDO ARTÍCULO
 ======================================-->
-
+<?php 
+	//echo '<pre class="bg-light">'; print_r($articulo['palabras_clave']); echo '</pre>';
+ ?>
 <div class="container-fluid bg-white contenidoInicio py-2 py-md-4">
 	
 	<div class="container">
 
 		<!-- BREADCRUMB -->
 
-		<a href="categorias.html">
+		<a href="<?php echo $categoria; ?>">
 			
 			<button class="d-block d-sm-none btn btn-info btn-sm mb-2">
 			
@@ -20,11 +22,11 @@ CONTENIDO ARTÍCULO
 
 		<ul class="breadcrumb bg-white p-0 mb-2 mb-md-4 breadArticulo">
 
-			<li class="breadcrumb-item inicio"><a href="index.html">Inicio</a></li>
+			<li class="breadcrumb-item inicio"><a href="<?php echo $global_apiserver; ?>">Inicio</a></li>
 
-			<li class="breadcrumb-item"><a href="categorias.html">Mi viaje por Suramérica</a></li>
+			<li class="breadcrumb-item"><a href="<?php echo $ruta_categoria; ?>"><?php echo $categoria; ?></a></li>
 
-			<li class="breadcrumb-item active">Type something here</li>
+			<li class="breadcrumb-item active"><?php echo $titulo; ?></li>
 
 		</ul>
 		
@@ -40,23 +42,20 @@ CONTENIDO ARTÍCULO
 
 					<div class="d-flex">
 					
-						<div class="fechaArticulo">30.09.2018</div>
+						<div class="fechaArticulo"><?php echo $fechaArticulo; ?></div>
 
-						<h3 class="tituloArticulo text-right text-muted pl-3 pt-lg-2">Type something here lorem</h3>
+						<h3 class="tituloArticulo text-right text-muted pl-3 pt-lg-2"><?php echo $titulo; ?></h3>
 
 					</div>
 
-					<img src="views/img/articulo.png" alt="Lorem ipsum dolor sit amet" class="img-fluid my-lg-3">
+					<img src="<?php echo $portada; ?>" alt="Lorem ipsum dolor sit amet" class="img-fluid my-lg-3">
 
-					<p class="textoArticulo my-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias aliquid laboriosam suscipit magnam distinctio nisi eaque expedita beatae neque nobis dolores corporis laudantium quo voluptatum facilis, aliquam sed deleniti delectus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae asperiores laborum facere est eos in optio suscipit, consequatur animi placeat adipisci, sunt. Unde distinctio odit, facilis quos eveniet et culpa. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, minus distinctio assumenda porro fugit voluptates officiis atque? Voluptas, soluta eius inventore aspernatur quasi, earum iste maiores porro ipsam, expedita minus.</p>
+					<?php echo $contenido; ?>
 
 					<!-- PUBLICIDAD -->
 
 					<img src="views/img/ad04.png" class="img-fluid my-3" width="100%">
 
-					<p class="textoArticulo my-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias aliquid laboriosam suscipit magnam distinctio nisi eaque expedita beatae neque nobis dolores corporis laudantium quo voluptatum facilis, aliquam sed deleniti delectus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae asperiores laborum facere est eos in optio suscipit, consequatur animi placeat adipisci, sunt. Unde distinctio odit, facilis quos eveniet et culpa. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, minus distinctio assumenda porro fugit voluptates officiis atque? Voluptas, soluta eius inventore aspernatur quasi, earum iste maiores porro ipsam, expedita minus.</p>
-
-					<p class="textoArticulo my-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias aliquid laboriosam suscipit magnam distinctio nisi eaque expedita beatae neque nobis dolores corporis laudantium quo voluptatum facilis, aliquam sed deleniti delectus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae asperiores laborum facere est eos in optio suscipit, consequatur animi placeat adipisci, sunt. Unde distinctio odit, facilis quos eveniet et culpa. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione, minus distinctio assumenda porro fugit voluptates officiis atque? Voluptas, soluta eius inventore aspernatur quasi, earum iste maiores porro ipsam, expedita minus.</p>
 
 					<!-- COMPARTIR EN REDES -->
 
@@ -64,13 +63,13 @@ CONTENIDO ARTÍCULO
 						
 						<div class="btn-group text-secondary">
 
-							Si te gusto compartelo:
+							Si te gustó compártelo:
 
 						</div>
 						
 						<div class="btn-group">
 							
-							<button type="button" class="btn border-0 text-white" style="background: #1475E0">
+							<button type="button" class="btn border-0 text-white social-share" data-share="facebook" style="background: #1475E0">
 								
 								<span class="fab fa-facebook pr-1"></span>
 
@@ -82,7 +81,7 @@ CONTENIDO ARTÍCULO
 
 						<div class="btn-group">
 							
-							<button type="button" class="btn border-0 text-white" style="background: #00A6FF">
+							<button type="button" class="btn border-0 text-white social-share" data-share="twitter" style="background: #00A6FF">
 								
 								<span class="fab fa-twitter pr-1"></span>
 
@@ -93,7 +92,9 @@ CONTENIDO ARTÍCULO
 						</div>
 
 					</div>
-
+					<!--    METODO CON FACEBOOK DEV
+					<div class="fb-share-button" data-href="http://localhost/CMS/CMS_APP/blog/titulo-de-articulo-1" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%2FCMS%2FCMS_APP%2Fblog%2Ftitulo-de-articulo-1&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Compartir</a></div>
+					-->
 					<!-- AVANZAR - RETROCEDER -->
 
 					<div class="clearfix"></div>
@@ -103,29 +104,9 @@ CONTENIDO ARTÍCULO
 					<div>
 
 						<h4>Etiquetas</h4>
-	
-							<a href="#suramerica" class="btn btn-secondary btn-sm m-1">suramerica</a> 		
-						
-							<a href="#colombia" class="btn btn-secondary btn-sm m-1">colombia</a> 							
-						
-							<a href="#peru" class="btn btn-secondary btn-sm m-1">peru</a> 							
-						
-							<a href="#argentina" class="btn btn-secondary btn-sm m-1">argentina</a> 							
-						
-							<a href="#chile" class="btn btn-secondary btn-sm m-1">chile</a> 							
-						
-							<a href="#brasil" class="btn btn-secondary btn-sm m-1">brasil</a> 							
-						
-							<a href="#ecuador" class="btn btn-secondary btn-sm m-1">ecuador</a> 							
-						
-							<a href="#venezuela" class="btn btn-secondary btn-sm m-1">venezuela</a> 
-							
-							<a href="#paraguay" class="btn btn-secondary btn-sm m-1">paraguay</a> 
-							
-							<a href="#uruguay" class="btn btn-secondary btn-sm m-1">uruguay</a> 
-						
-							<a href="#bolivia" class="btn btn-secondary btn-sm m-1">bolivia</a> 
-																		
+							<?php foreach ($etiquetas as $key => $value): ?>
+								<a href="#suramerica" class="btn btn-secondary btn-sm m-1"><?php echo $value; ?></a> 
+							<?php endforeach ?>													
 					</div>
 
 				 	<div class="d-md-flex justify-content-between my-3 d-none">
@@ -143,62 +124,21 @@ CONTENIDO ARTÍCULO
 						<div class="slide-inner">
 							
 							<ul class="slide-area">
-								
-								<li class="px-3">
-									
-									<a href="articulos.html" class="text-secondary">
+								<?php foreach ($articulos_destacados as $key => $value): ?>
+									<li class="px-3">
 
-										<img src="views/img/articulo01.png" alt="Lorem ipsum dolor sit amet" class="img-fluid">
+										<a href="<?php echo $value['ruta']; ?>" class="text-secondary">
 
-										<h6 class="py-2">Type something here</h6>
+											<img src="<?php echo $value['portada']; ?>" alt="<?php echo $value['titulo']; ?>" class="img-fluid">
 
-									</a>
+											<h6 class="py-2"><?php echo $value['titulo']; ?></h6>
 
-									 <p class="small">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem quibusdam sint porro...</p>
+										</a>
 
-								</li>
+										<p class="small"><?php echo $value['description']; ?></p>
 
-								<li class="px-3">
-									
-									<a href="articulos.html" class="text-secondary">
-
-										<img src="views/img/articulo02.png" alt="Lorem ipsum dolor sit amet" class="img-fluid">
-									
-										<h6 class="py-2">Type something here</h6>
-
-									</a>
-
-									<p class="small">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem quibusdam sint porro...</p>
-
-								</li>
-
-								<li class="px-3">
-									
-									<a href="articulos.html" class="text-secondary">
-
-										<img src="views/img/articulo03.png" alt="Lorem ipsum dolor sit amet" class="img-fluid">
-									
-										<h6 class="py-2">Type something here</h6>
-
-									</a>
-
-									<p class="small">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem quibusdam sint porro...</p>
-
-								</li>
-
-								<li class="px-3">
-									
-									<a href="articulos.html" class="text-secondary">
-
-										<img src="views/img/articulo04.png" alt="Lorem ipsum dolor sit amet" class="img-fluid">
-									
-										<h6 class="py-2">Type something here</h6>
-
-									</a>
-
-									<p class="small">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem quibusdam sint porro...</p>
-
-								</li>
+								1	</li>
+								<?php endforeach ?>
 
 							</ul>
 

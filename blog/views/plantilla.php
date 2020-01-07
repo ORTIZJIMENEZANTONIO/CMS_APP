@@ -1,6 +1,6 @@
 <?php 
 require_once 'controllers/blog_controller.php';
-
+include 'common/apiserver.php';
 $blog = blog_controller::mostrar_blog_ctr();
 $menu = blog_controller::mostrar_categorias_ctr();
 $total_articulos = blog_controller::count_total_ctr(null, null);
@@ -22,7 +22,21 @@ if (!isset($_GET['pg'])) {
 		$pagina_actual = $_GET['pg'];
 		$articulos = blog_controller::mostrar_articulos_ctr($_GET['pg'], null, null);
 	}else if (count($rutas)==1 && !is_numeric($rutas[0])) {
-	
+		$articulo = blog_controller::mostrar_articulo_ctr("ruta", $rutas[0]);
+		if (is_bool($articulo)) {
+			//echo '<pre>'; var_dump($articulo); echo '</pre>';
+			$articulo = null;
+		}else if (is_array($articulo)) {
+			$etiquetas = json_decode($articulo['palabras_clave'], true);
+			$contenido = $articulo['contenido'];
+			$titulo = $articulo['titulo'];
+			$fechaArticulo = $articulo['fecha'];
+			$portada = $articulo['portada'];
+			$description  = $articulo['description'];
+			$categoria = $articulo['categoria'];
+			$ruta_categoria = $articulo['ruta_categoria'];
+		}
+		
 	}else{
 		include_once 'pages/404.php';
 	}
@@ -42,37 +56,53 @@ if (!isset($_GET['pg'])) {
 		<?php foreach ($kw as $key => $value): $key_words.=$value.", ";?>
 		<?php endforeach ?>
 		<meta name="keywords" content="<?php echo substr($key_words,0,-2);?>">
-	<?php else: $rut = ""?>
+	<?php else: $rut = ""; ?>
 		<?php foreach ($menu as $key => $value): ?>
-			<?php if ($_GET['pg'] == $value['ruta']): ?>
+			<?php if ($rutas[0] == $value['ruta']): ?>
 				<?php $rut = "categorias"; 
 					$key_w = $value['palabras_clave']; 
 					$title = $value['titulo'];
 					$description = $value['description'];
 				?>
-			<?php endif ?>
+			<?php endif ?>	
 		<?php endforeach ?>
 		<?php if ($rut == "categorias"): ?>
-				<meta name="title" content="<?php echo $blog['titulo']." ".$title; ?>">
-				<meta name="description" content="<?php echo $description; ?>">
-				<title><?php echo $blog['titulo']." | ".$title; ?></title>
-				<?php $kwords=""; $kw = json_decode($key_w,true); ?>
-				<?php foreach ($kw as $key => $val): $kwords.=$val.", ";?>
-				<?php endforeach ?>
-				<meta name="keywords" content="<?php echo substr($kwords,0,-2);?>">
+			<meta name="title" content="<?php echo $blog['titulo']." ".$title; ?>">
+			<meta name="description" content="<?php echo $description; ?>">
+			<title><?php echo $blog['titulo']." | ".$title; ?></title>
+			<?php $kwords=""; $kw = json_decode($key_w,true); ?>
+			<?php foreach ($kw as $key => $val): $kwords.=$val.", ";?>
+			<?php endforeach ?>
+			<meta name="keywords" content="<?php echo substr($kwords,0,-2);?>">
+		<?php elseif(isset($articulo)): ?>	
+			<meta name="title" content="<?php echo $blog['titulo']." | ".$titulo; ?>">
+			<meta name="description" content="<?php echo $description; ?>">
+			<title><?php echo $blog['titulo']." | ".$titulo; ?></title>
+			<?php $kwords=""; ?>
+			<?php foreach ($etiquetas as $key => $val): $kwords.=$val.", ";?>
+			<?php endforeach ?>
+			<meta name="keywords" content="<?php echo substr($kwords,0,-2);?>">
+			<!-- Opengraph -->
+			<meta property="og:site_name" content="<?php echo $blog['titulo']; ?>">
+			<meta property="og:title" content="<?php echo $titulo; ?>">
+			<meta property="og:description" content="<?php echo $description; ?>">
+			<meta property="og:type" content="article">
+			<meta property="og:image" content="<?php echo $portada; ?>">
+			<meta property="og:url" content="<?php echo $global_apiserver.$titulo; ?>">
+
 		<?php else: ?>
-					<meta name="title" content="<?php echo $blog['titulo']; ?>">
-					<meta name="description" content="<?php echo $blog['descripcion']; ?>">
-					<?php $key_words=""; $kw = json_decode($blog['palabras_clave'],true); ?>
-					<?php foreach ($kw as $key => $value): $key_words.=$value.", ";?>
-					<?php endforeach ?>
-					<meta name="keywords" content="<?php echo substr($key_words,0,-2);?>">
+			<meta name="title" content="<?php echo $blog['titulo']; ?>">
+			<meta name="description" content="<?php echo $blog['descripcion']; ?>">
+			<?php $key_words=""; $kw = json_decode($blog['palabras_clave'],true); ?>
+			<?php foreach ($kw as $key => $value): $key_words.=$value.", ";?>
+			<?php endforeach ?>
+			<meta name="keywords" content="<?php echo substr($key_words,0,-2);?>">
 		<?php endif ?>
 	<?php endif ?>
 	<!-- fin de metadatos dinámicos -->
 	<meta name="author" content="José Antonio Ortiz Jiménez">
 	<link rel="icon" href="<?php echo $blog['icono']; ?>">
-
+	
 	<!--=====================================
 	PLUGINS DE CSS
 	======================================-->
@@ -119,12 +149,15 @@ if (!isset($_GET['pg'])) {
 </head>
 
 <body>
+	<!--
+	<div id="fb-root"></div>
+	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v5.0"></script>
+	-->
 	<?php
 		include 'pages/modulos/header.php';
 		include 'pages/modulos/redes-sociales-movil.php';
 		include 'pages/modulos/buscador-movil.php';
 		include 'pages/modulos/menu.php';
-		include 'common/apiserver.php';
 
 		/*================================================
 		=            navegación entre páginas            =
@@ -154,17 +187,15 @@ if (!isset($_GET['pg'])) {
 					include_once 'pages/404.php';
 				}
 			}else if (count($rutas)==1 && !is_numeric($rutas[0])) {
-				$inc = "";
-				foreach ($menu as $key => $value) {
-					if ($rutas[0] == $value['ruta']){
-						$inc = "categorias";
-					}	
-				}
-
-				if ($inc == "categorias") {
+				if ($rut == "categorias") {
 					include_once 'pages/categorias.php';
 				}else {
-					include_once 'pages/404.php';
+					//echo '<pre>'; print_r($articulo); echo '</pre>';
+					if (isset($articulo)) {
+						include_once 'pages/articulos.php';
+					}else{
+						include_once 'pages/404.php';
+					}
 				}
 				/* aquí deberia revisar si no quieres visualizr un articulo */
 			}else{
@@ -179,5 +210,6 @@ if (!isset($_GET['pg'])) {
 
 	<script src="common/apiserver.js"></script>
 	<script src="views/js/script.js"></script>
+	<script src="shape.share.js"></script>
 </body>
 </html>
