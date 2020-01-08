@@ -2,7 +2,12 @@
 CONTENIDO ARTÍCULO
 ======================================-->
 <?php 
-	//echo '<pre class="bg-light">'; print_r($articulo['palabras_clave']); echo '</pre>';
+	$opiniones = blog_controller::mostrar_opiniones_articulo_ctr($articulo['id'],0);
+	
+//echo '<pre class="bg-light">'; count($opiniones); echo '</pre>';
+	if (count($opiniones) < 1) {
+		$opiniones = NULL;
+	}
  ?>
 <div class="container-fluid bg-white contenidoInicio py-2 py-md-4">
 	
@@ -69,13 +74,7 @@ CONTENIDO ARTÍCULO
 						
 						<div class="btn-group">
 							
-							<button type="button" class="btn border-0 text-white social-share" data-share="facebook" style="background: #1475E0">
-								
-								<span class="fab fa-facebook pr-1"></span>
-
-								Facebook
-
-							</button>
+							<div class="fb-share-button" data-href="http://localhost/CMS/CMS_APP/blog/titulo-de-articulo-1" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%2FCMS%2FCMS_APP%2Fblog%2Ftitulo-de-articulo-1&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Compartir</a></div>
 
 						</div>
 
@@ -92,9 +91,7 @@ CONTENIDO ARTÍCULO
 						</div>
 
 					</div>
-					<!--    METODO CON FACEBOOK DEV
-					<div class="fb-share-button" data-href="http://localhost/CMS/CMS_APP/blog/titulo-de-articulo-1" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%2FCMS%2FCMS_APP%2Fblog%2Ftitulo-de-articulo-1&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Compartir</a></div>
-					-->
+					
 					<!-- AVANZAR - RETROCEDER -->
 
 					<div class="clearfix"></div>
@@ -124,10 +121,12 @@ CONTENIDO ARTÍCULO
 						<div class="slide-inner">
 							
 							<ul class="slide-area">
-								<?php foreach ($articulos_destacados as $key => $value): ?>
-									<li class="px-3">
+								
+								<?php foreach ($articulosCat as $key => $value): ?>
 
-										<a href="<?php echo $value['ruta']; ?>" class="text-secondary">
+									<li class="px-3 col-4">
+
+										<a href="<?php echo $blog['dominio'].$value['ruta']; ?>" class="text-secondary">
 
 											<img src="<?php echo $value['portada']; ?>" alt="<?php echo $value['titulo']; ?>" class="img-fluid">
 
@@ -135,11 +134,10 @@ CONTENIDO ARTÍCULO
 
 										</a>
 
-										<p class="small"><?php echo $value['description']; ?></p>
+										<p class="small"><?php echo substr($value['description'], 0,100)."..."; ?></p>
 
-								1	</li>
+									</li>
 								<?php endforeach ?>
-
 							</ul>
 
 							<a class="prev" href="#">
@@ -171,42 +169,58 @@ CONTENIDO ARTÍCULO
 				  	<hr style="border: 1px solid #79FF39">
 					
 					<div class="row opiniones">
+
+						<?php if (isset($opiniones)): ?>
+
+							<?php foreach ($opiniones as $key => $value): ?>
+								<div class="col-3 col-sm-4 col-lg-2 p-2">
+
+									<img src="<?php echo $value['foto']; ?>">
+
+								</div>
+
+								<div class="col-9 col-sm-8 col-lg-10 p-2 text-muted">
+
+									<p class="ml-lg-4"><?php echo $value['contenido']; ?></p>
+
+									<span class="small float-right"><?php echo $value['nombre']; ?>| <?php echo $value['fecha']; ?></span>
+
+								</div>	
+								<?php if (isset($value['id_administrador'])): ?>
+									<?php $contra_resp = blog_controller::mostrar_opiniones_articulo_ctr($value['id'],1);
+									?>
+									<?php foreach ($contra_resp as $key => $val): ?>
+										<div class="col-9 col-sm-8 col-lg-10 p-2 text-muted">
+
+											<p><?php echo $val['respuesta']; ?></p>
+
+											<span class="small float-right"><?php echo $val['name_admin']; ?> | <?php echo $val['fecha_respuesta']; ?></span>
+
+										</div>
+
+										<div class="col-3 col-sm-4 col-lg-2 p-2">
+
+											<img src="<?php echo $val['foto_admin']; ?>" class="img-thumbnail">	
+
+										</div>
+									<?php endforeach ?>
+									
+								<?php endif ?>
+
+							<?php endforeach ?>
+						<?php else : ?>
+							<div class="col-12 text-center">
+								<p class="text-uppercase">No hay comentarios</p>
+							</div>
+						<?php endif ?>
 						
-						<div class="col-3 col-sm-4 col-lg-2 p-2">
-						
-							<img src="views/img/user01.jpg" class="img-thumbnail">	
-
-						</div>
-
-						<div class="col-9 col-sm-8 col-lg-10 p-2 text-muted">
-							
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto beatae, aut sint provident dolorem minus recusandae facere, ipsum magnam, nostrum enim. Error quasi quod ab consectetur explicabo consequuntur obcaecati suscipit!</p>
-
-							<span class="small float-right">Carla Gómez | 20.09.2018</span>
-
-						</div>	
-
-						<div class="col-9 col-sm-8 col-lg-10 p-2 text-muted">
-							
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto beatae, aut sint provident dolorem minus recusandae facere, ipsum magnam, nostrum enim. Error quasi quod ab consectetur explicabo consequuntur obcaecati suscipit!</p>
-
-							<span class="small float-right">Juanito Travel | 20.09.2018</span>
-
-						</div>
-
-						<div class="col-3 col-sm-4 col-lg-2 p-2">
-						
-							<img src="views/img/user02.jpg" class="img-thumbnail">	
-
-						</div>
-
 					</div>
 
 					<hr style="border: 1px solid #79FF39">
 
 					<!-- FORMULARIO DE OPINIONES -->
 					
-					<form>
+					<form method="POST" enctype="multipart/form-data">
 						
 						<label class="text-muted lead">¿Qué tal te pareció el artículo?</label>
 
@@ -216,25 +230,52 @@ CONTENIDO ARTÍCULO
 								
 								<div class="input-group-lg">
 									
-									<input type="text" class="form-control my-3" placeholder="Tu nombre">
+									<input type="text" class="form-control my-3" placeholder="Tu nombre" name="nombre_opinion" required>
 
-									<input type="email" class="form-control my-3" placeholder="Tu email">
+									<input type="email" class="form-control my-3" placeholder="Tu email" name="email_opinion" required>
 
 								</div>
 
 							</div>
 
-							<div class="d-none d-md-block col-md-4 col-lg-3">
-								
-								<img src="views/img/subirFoto.png" class="img-fluid mt-md-3 mt-xl-2">
+							<input type="file" name="foto_opinion" class="d-none" id="foto-opinion">
 
-							</div>
+							<label class="d-none d-md-block col-md-4 col-lg-3" for="foto-opinion">
+								
+								<img src="views/img/subirFoto.png" class="img-fluid mt-md-3 mt-xl-2  prevfoto">
+
+							</label>
 
 						</div>	
 
-						<textarea class="form-control my-3" rows="7" placeholder="Escribe aquí tu mensaje"></textarea>
+						<textarea class="form-control my-3" rows="7" placeholder="Escribe aquí tu mensaje" name="contenido_opinion" required></textarea>
 						
 						<input type="submit" class="btn btn-dark btn-lg btn-block" value="Enviar">
+
+						<?php
+						 $enviar_opinion = blog_controller::enviar_opinion_ctr($articulo['id']);
+						 ?>
+						 <?php if ($enviar_opinion == 'incomplete'): ?>
+						 	<div class="alert-danger">Favor de llenar correctamente</div>
+						 <?php elseif($enviar_opinion == 'ok'): ?>
+							<?php 
+							echo "<script type='text/javascript'>
+
+							if(window.history.replaceState){
+								
+								window.history.replaceState(null, null, window.location.href);
+						
+								show_alert('Hecho!', 'Tu comentario ha sido mandado a revisión');
+								
+							}
+
+							</script>';";
+							echo "<div class='alert alert-success'>Registro exitoso </div>";
+
+							?>
+						 <?php elseif ($enviar_opinion == "message-error-formato"): ?>
+							<div class="alert-danger"><p>Favor de llenar con un formato válido la imagen</p></div>
+						 <?php endif ?>
 
 					</form>
 

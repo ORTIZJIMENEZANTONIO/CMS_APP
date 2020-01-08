@@ -88,7 +88,91 @@ $(".grid figure, .gridFooter figure").click(function(){
 
 	window.location = vinculo;
 
+});
+
+
+/*=============================================
+SCROLL UP
+=============================================*/
+
+$.scrollUp({
+	scrollText:"",
+	scrollSpeed: 2000,
+	easingType: "easeOutQuint"
 })
+
+/*=============================================
+DESLIZADOR DE ARTÍCULOS
+=============================================*/
+
+
+$(".deslizadorArticulos").jdSlider({
+	wrap: ".slide-inner",
+	slideShow: 3,
+	slideToScroll:3,
+	isLoop: true,
+	responsive: [{
+		viewSize: 320,
+		settings:{
+			slideShow: 1,
+			slideToScroll: 1
+		}
+
+	}]
+
+});
+
+
+ /**
+  *
+  * subir foto de opinion
+  *
+  */
+ 
+$('#foto-opinion').change(function(){
+	var img = this.files[0];
+	console.log(img);
+	//validar si es img
+	if (img['type'] != "image/jpeg" && img['type'] != "image/png" ) {
+		$('#foto-opinion').val("");
+		$('#foto-opinion').after('<div class="alert-danger"><p>La imagen debe estar en jpg o png</p></div>');
+		return;
+	}else if (img['size']>3000000) {
+		$('#foto-opinion').val("");
+		$('#foto-opinion').after('<div class="alert-danger"><p>La imagen debe pesar menos de 3 mb</p></div>');
+	
+	}else{
+		var datos_img = new FileReader;
+		datos_img.readAsDataURL(img);
+		$(datos_img).on("load", function(event){
+			var ruta_img = event.target.result;
+			$(".prevfoto").attr("src", ruta_img);
+		});
+	}
+	
+});
+
+
+
+$('.busqueda').change(function(){
+	var busqueda = $(this).val().toLowerCase();
+	var expresion = /^[0-9A-Za-zñáéíóúú]*$/;
+
+	if (!expresion.test(busqueda)) {
+		$('.busqueda').val("");
+	}else{
+		//console.log(global_apiserver + $('.busqueda').val());
+		var evaluar_busqueda = busqueda.replace(/ñáéíóúú /g,"_");
+		var ruta_buscador = evaluar_busqueda;
+		
+		$('#buscar').click(function(){
+			if ($('.busqueda').val() != "") {
+				window.location = global_apiserver + ruta_buscador;
+			}
+		});
+	}
+});
+
 
 /*=============================================
 PAGINACIÓN
@@ -132,43 +216,4 @@ $(".pagination").twbsPagination({
 		}
 	}
 	
-
-	
-});
-
-
-/*=============================================
-SCROLL UP
-=============================================*/
-
-$.scrollUp({
-	scrollText:"",
-	scrollSpeed: 2000,
-	easingType: "easeOutQuint"
-})
-
-/*=============================================
-DESLIZADOR DE ARTÍCULOS
-=============================================*/
-
-
-$(".deslizadorArticulos").jdSlider({
-	wrap: ".slide-inner",
-	slideShow: 3,
-	slideToScroll:3,
-	isLoop: true,
-	responsive: [{
-		viewSize: 320,
-		settings:{
-			slideShow: 1,
-			slideToScroll: 1
-		}
-
-	}]
-
-})
-
-$('.social-share').shapeShare({
-	
-
 });
