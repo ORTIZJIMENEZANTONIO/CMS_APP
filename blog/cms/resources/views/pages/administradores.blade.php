@@ -31,7 +31,9 @@
               <p class="card-title font-weight-bold">Administradores</p>
             </div>
             <div class="card-body">
-
+              @foreach ($admins as $element)
+                {{$element}}
+              @endforeach
             </div>
             <div class="card-footer">
 

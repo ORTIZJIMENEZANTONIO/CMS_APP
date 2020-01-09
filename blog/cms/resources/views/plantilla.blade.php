@@ -23,6 +23,12 @@
 	{{--Overlay scrollbar--}}
 	<link rel="stylesheet" type="text/css" href="{{ url('/') }}/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 
+	{{--Tags Input--}}
+	<link rel="stylesheet" type="text/css" href="{{ url('/') }}/plugins/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.css">
+
+	{{--Summernote--}}
+	<link rel="stylesheet" type="text/css" href="{{ url('/') }}/plugins/summernote/dist/summernote.min.css">
+
 	<!--====  End of Section comment  ====-->
 	
 	<!--===================================
@@ -41,11 +47,18 @@
 	{{--Overlay scrollbar--}}
 	<script type="text/javascript" src="{{ url('/') }}/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 
+	{{--Tags Input--}}
+	<script src="{{ url('/') }}/plugins/bootstrap-tagsinput-latest/dist/bootstrap-tagsinput.js"></script>
+
+	{{--Summernite--}}
+	<script src="{{ url('/') }}/plugins/summernote/dist/summernote.min.js"></script>
+
 	{{--CUSTOM scrollbar--}}
 	<script src="{{ url('/') }}/js/plugins/adminlte.js"></script>
+	
+	{{--Custom.js--}}
+	<script src="{{ url('/') }}/js/custom.js"></script>
 	<!--====  End of Plugins de js  ====-->
-	
-	
 	
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">

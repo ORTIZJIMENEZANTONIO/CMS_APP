@@ -1,0 +1,23 @@
+
+   InvalidArgumentException  : Attribute [resorce] does not exist.
+
+  at C:\xampp\htdocs\CMS\CMS_APP\blog\cms\vendor\laravel\framework\src\Illuminate\Routing\RouteRegistrar.php:92
+    88|      */
+    89|     public function attribute($key, $value)
+    90|     {
+    91|         if (! in_array($key, $this->allowedAttributes)) {
+  > 92|             throw new InvalidArgumentException("Attribute [{$key}] does not exist.");
+    93|         }
+    94| 
+    95|         $this->attributes[Arr::get($this->aliases, $key, $key)] = $value;
+    96|
+
+  Exception trace:
+
+  1   Illuminate\Routing\RouteRegistrar::attribute("resorce", "/")
+      C:\xampp\htdocs\CMS\CMS_APP\blog\cms\vendor\laravel\framework\src\Illuminate\Routing\Router.php:1293
+
+  2   Illuminate\Routing\Router::__call("resorce")
+      C:\xampp\htdocs\CMS\CMS_APP\blog\cms\vendor\laravel\framework\src\Illuminate\Support\Facades\Facade.php:261
+
+  Please use the argument -v to see more details.

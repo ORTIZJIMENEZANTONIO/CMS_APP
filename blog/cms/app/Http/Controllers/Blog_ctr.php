@@ -7,7 +7,7 @@ use App\Blog;
 
 class Blog_ctr extends Controller
 {
-    public function show_blog(){
+    public function Index(){
     	$blog =  Blog::all();
     	return view("pages.blog", array('blog'=>$blog));
     }
