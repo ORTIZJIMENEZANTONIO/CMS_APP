@@ -12,5 +12,20 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('plantilla');
 });
+
+Route::view('/','pages.blog');
+Route::view('/administradores','pages.administradores');
+Route::view('/categorias','pages.categorias');
+Route::view('/articulos','pages.articulos');
+Route::view('/opiniones','pages.opiniones');
+Route::view('/banners','pages.banners');
+Route::view('/anuncios','pages.anuncios');
+
+Route::get('/', 'Blog_ctr@show_blog');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
