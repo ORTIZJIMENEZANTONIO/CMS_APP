@@ -58,6 +58,9 @@
 	
 	{{--Custom.js--}}
 	<script src="{{ url('/') }}/js/custom.js"></script>
+
+	{{--Swet Alerts--}}
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 	<!--====  End of Plugins de js  ====-->
 	
 </head>

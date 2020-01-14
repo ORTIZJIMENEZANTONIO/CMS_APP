@@ -131,7 +131,7 @@ $(".deslizadorArticulos").jdSlider({
  
 $('#foto-opinion').change(function(){
 	var img = this.files[0];
-	console.log(img);
+	//console.log(img);
 	//validar si es img
 	if (img['type'] != "image/jpeg" && img['type'] != "image/png" ) {
 		$('#foto-opinion').val("");

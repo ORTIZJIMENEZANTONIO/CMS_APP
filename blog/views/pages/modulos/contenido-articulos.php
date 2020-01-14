@@ -242,7 +242,7 @@ CONTENIDO ARTÍCULO
 
 							<label class="d-none d-md-block col-md-4 col-lg-3" for="foto-opinion">
 								
-								<img src="views/img/subirFoto.png" class="img-fluid mt-md-3 mt-xl-2  prevfoto">
+							<img src="views/img/subirFoto.png" class="img-fluid mt-md-3 mt-xl-2  prevfoto">
 
 							</label>
 

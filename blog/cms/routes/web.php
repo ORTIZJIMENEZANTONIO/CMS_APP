@@ -40,6 +40,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 //rutas para put, get, delete, view, post
 //php artisan route:list
 Route::resource('/', 'Blog_ctr');
+Route::resource('/blog', 'Blog_ctr');
 Route::resource('/administradores', 'Administrador_ctr');
 Route::resource('/categorias','Categoria_ctr');
 Route::resource('/articulos','Articulo_ctr');
