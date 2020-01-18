@@ -29,7 +29,7 @@
               
           @endforeach
           {{-- siempre poner enctype="multipárt/form-data" cuando se suban imagenes --}}
-          <form action="{{ url('/blog') }}/{{ $value['id'] }} " method="POST" enctype="multipárt/form-data">
+          <form action="{{ url('/blog') }}/{{ $value['id'] }} " method="POST" enctype="multipart/form-data">
             {{--Actualizar--}}
             @method('PUT')
             {{--Token de seguridad para evitar XSS u otro ataque via url--}}

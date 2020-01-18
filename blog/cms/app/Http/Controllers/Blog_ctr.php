@@ -93,30 +93,91 @@ class Blog_ctr extends Controller
 			if ($validar->fails()) {
 				return redirect("/")->with("no-validation", "");
 			}else{
-
+				//Subir imágenes al servidor
 				if($logo["logo_tmp"] != ""){
-					unlink($datos['logo_actual']);
+					//unlink($datos['logo_actual']);
 					$aleatorio = mt_rand(1, 1000000);
-					$ruta_logo = "img/blog/".$aleatorio."lg".$datos['logo_actual']->guessExtension();
-					move_uploaded_file($logo["logo_tmp"], $ruta_logo);
+					$ruta_logo = "img/blog/".$aleatorio."lg.".$logo['logo_tmp']->guessExtension();
+					//move_uploaded_file($logo["logo_tmp"], $ruta_logo);
+					list($width, $height) = getimagesize($logo["logo_tmp"]);
+					$new_width = 700;
+					$new_height = 200;
+
+					if ($logo['logo_tmp']->guessExtension() == "jpeg") {
+						$origen = imagecreatefromjpeg($logo['logo_tmp']);
+						$destino = imagecreatetruecolor($new_width, $new_height);
+						imagealphablending($destino, FALSE);
+						imagesavealpha($destino, TRUE);
+						imagecopyresized($destino, $origen, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+						imagejpeg($destino, $ruta_logo);
+					} else if ($logo['logo_tmp']->guessExtension() == "png"){
+						$origen = imagecreatefrompng($logo['logo_tmp']);
+						$destino = imagecreatetruecolor($new_width, $new_height);
+						imagealphablending($destino, FALSE);
+						imagesavealpha($destino, TRUE);
+						imagecopyresized($destino, $origen, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+						imagepng($destino, $ruta_logo);
+					}
+					
 				}else{
 					$ruta_logo = $datos['logo_actual'];
 				}
 
 				if($portada["portada_tmp"] != ""){
-					unlink($datos['portada_actual']);
+					//unlink($datos['portada_actual']);
 					$aleatorio = mt_rand(1, 1000000);
-					$ruta_portada = "img/blog/".$aleatorio."pt".$datos['logo_actual']->guessExtension();
-					move_uploaded_file($portada["logo_tmp"], $ruta_portada);
+					$ruta_portada = "img/blog/".$aleatorio."pt.".$portada['portada_tmp']->guessExtension();
+					//move_uploaded_file($portada["portada_tmp"], $ruta_portada);
+					list($width, $height) = getimagesize($portada["portada_tmp"]);
+					$new_width = 700;
+					$new_height = 420;
+
+					if ($portada["portada_tmp"]->guessExtension() == "jpeg") {
+						$origen = imagecreatefromjpeg($portada['portada_tmp']);
+						$destino  = imagecreatetruecolor($new_width, $new_height);
+						imagealphablending($destino, FALSE);
+						imagesavealpha($destino, TRUE);
+						imagecopyresized($destino, $origen, 0, 0, 0, 0, $new_width, $new_height, $width,$height);
+						imagejpeg($destino, $ruta_portada);
+					} else if ($portada['portada_tmp']->guessExtension() == "png"){
+						$origen = imagecreatefrompng($portada['portada_tmp']);
+						$destino = imagecreatetruecolor($new_width, $new_height);
+						imagealphablending($destino, FALSE);
+						imagesavealpha($destino, TRUE);
+						imagecopyresized($destino, $origen, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+						imagepng($destino, $ruta_portada);
+					}
+					
 				}else{
 					$ruta_portada = $datos['portada_actual'];
 				}
 
 				if($icono["icono_tmp"] != ""){
-					unlink($datos['icono_actual']);
+					//unlink($datos['icono_actual']);
 					$aleatorio = mt_rand(1, 1000000);
-					$ruta_icono = "img/blog/".$aleatorio."in".$datos['logo_actual']->guessExtension();
-					move_uploaded_file($logo["logo_tmp"], $ruta_icono);
+					$ruta_icono = "img/blog/".$aleatorio."in.".$icono['icono_tmp']->guessExtension();
+					//Se ocupa normalmente en pdf, excel etc. en imáegenes no porque se necesita revalidar
+					//move_uploaded_file($icono["icono_tmp"], $ruta_icono);
+					list($width, $height) = getimagesize($icono['icono_tmp']);
+
+					$new_width = 150;
+					$new_height = 150;
+					if ($icono["icono_tmp"]->guessExtension() == "jpeg") {
+						$origen = imagecreatefromjpeg($icono["icono_tmp"]);
+						$destino = imagecreatetruecolor($new_width, $new_height);
+						imagealphablending($destino, FALSE);
+						imagesavealpha($destino, TRUE);
+						imagecopyresized($destino, $origen, 0, 0, 0, 0, $new_width,$new_height, $width, $height);
+						imagejpeg($icono["icono_tmp"]);
+					} else if ($icono["icono_tmp"]->guessExtension() == "png"){
+						$origen = imagecreatefrompng($icono["icono_tmp"]);
+						$destino = imagecreatetruecolor($new_width, $new_height);
+						imagealphablending($destino, FALSE);
+						imagesavealpha($destino, TRUE);
+						imagecopyresized($destino, $origen, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+						imagepng($destino, $ruta_icono);
+					}
+					
 				}else{
 					$ruta_icono = $datos['icono_actual'];
 				}
@@ -125,6 +186,7 @@ class Blog_ctr extends Controller
 									"server" => $datos['servidor'], 
 									"titulo"=> $datos['titulo'], 
 									"descripcion" => $datos['descripcion'], 
+
 									"palabras_clave" => json_encode(explode(",", $datos['palabras_clave'])), 
 									"redes_sociales" => $datos['redes_sociales'],
 									"logo" => $ruta_logo,
